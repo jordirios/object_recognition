@@ -1,7 +1,10 @@
 #include "find_function.h"
 
-void FindObject (const pcl::PointCloud<PointType>::Ptr model, const pcl::PointCloud<PointType>::Ptr&  original_scene, Semaphore& s, 
-                 std::vector<ClusterType>& found_models,const int id, const float filter_intensity, const int icp_iteration,  ErrorWriter & e, const int & frame_index) {
+void FindObject (const pcl::PointCloud<PointType>::Ptr model,
+                 const pcl::PointCloud<PointType>::Ptr&  original_scene, Semaphore& s,
+                 std::vector<ClusterType>& found_models,const int id,
+                 const float filter_intensity, const int icp_iteration,
+                 ErrorWriter & e, const int & frame_index) {
 
   pcl::PointCloud<PointType>::Ptr model_keypoints (new pcl::PointCloud<PointType> ());
   pcl::PointCloud<PointType>::Ptr scene_keypoints (new pcl::PointCloud<PointType> ());
@@ -123,7 +126,7 @@ void FindObject (const pcl::PointCloud<PointType>::Ptr model, const pcl::PointCl
       {
         // RANSAC
         std::cout << "finding ransac keypoints..." << std::endl;
-        ransac_estimator = new Ransac < pcl::SampleConsensusModelSphere < PointType >>();
+        ransac_estimator = new Ransac < pcl::SampleConsensusModelSphere < PointType >>;
         ransac_estimator->GetKeypoints (scene, scene_keypoints);
       }
       else if (harris)

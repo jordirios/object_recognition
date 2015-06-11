@@ -171,7 +171,8 @@ NormalEstimator::NormalEstimator() {
   norm_est_.setKSearch (10);
 }
 
-NormalEstimator::NormalEstimator(int n_neighbours): NormalEstimator::NormalEstimator() { 
+NormalEstimator::NormalEstimator(int n_neighbours) {
+    norm_est_.setKSearch (10);
   norm_est_.setKSearch (n_neighbours);
 }
 

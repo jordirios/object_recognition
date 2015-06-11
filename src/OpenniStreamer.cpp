@@ -4,6 +4,7 @@ OpenniStreamer::OpenniStreamer ()
 {
   mode_ = 0;
   frame_count_ = 0;
+  openni2_grabber_ = 0;
   cloud_ = boost::make_shared<pcl::PointCloud<pcl::PointXYZRGB>>();
   rc_ = openni::OpenNI::initialize ();  
   if (rc_ != openni::STATUS_OK)
@@ -77,6 +78,7 @@ OpenniStreamer::OpenniStreamer (std::string file_name)
 {
   mode_ = 1;
   frame_count_ = 0;
+  openni2_grabber_ = 0;
   cloud_ = boost::make_shared<pcl::PointCloud<pcl::PointXYZRGB>>();
   rc_ = openni::OpenNI::initialize (); 
   if (rc_ != openni::STATUS_OK)

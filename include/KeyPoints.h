@@ -53,9 +53,13 @@ class Harris
 class Uniform
 {
   public:
+    Uniform()
+    {
+        cloud_ss_ = 0.0;
+    }
     pcl::UniformSampling<PointType> uniform_sampling_;
     pcl::PointCloud<int> sampled_indices_;
-    float cloud_ss_ = 0;
+    float cloud_ss_;
 
     void
     SetSamplingSize (float sampling_size);

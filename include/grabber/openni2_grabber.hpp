@@ -3,20 +3,24 @@
 #include "OpenNI.h"
 #include <stdio.h>
 #include <iostream>
-#include "registration.h"
+//#include "registration.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename PointT> 
 class OpenNI2Grabber
 {
     public:
-
-        uint16_t * depth_maptmp = 0;
-        bool init = true;
-        KinectRegistration *reg = 0;
+        uint16_t * depth_maptmp;
+        bool init;
+        //KinectRegistration *reg;
         std::string dev_type_;
 
-    OpenNI2Grabber(std::string dev_type):dev_type_(dev_type){}
+    OpenNI2Grabber(std::string dev_type):dev_type_(dev_type)
+    {
+        depth_maptmp = 0;
+        //reg = 0;
+        init = true;
+    }
 
     typename pcl::PointCloud<PointT>::Ptr 
     get_point_cloud(openni::RGB888Pixel* rgb_buffer, uint16_t* depth_map, int distance, bool colored, int image_height, int image_width, bool kreg, bool set_mirror) 
@@ -27,16 +31,7 @@ class OpenNI2Grabber
 
         if(kreg)
         {   
-            if(init){
-                reg = new KinectRegistration(false);
-                reg->init(depth_width, depth_height, 1, 1);
-                if(set_mirror)
-                    reg->SetMirror();
-                init = !init;
-                depth_maptmp = (uint16_t*)malloc(sizeof(uint16_t)*depth_width*depth_height);
-            }
-            reg->apply_registration(depth_map, depth_maptmp);
-            depth_map = depth_maptmp;
+
         }
 
         //create the empty Pointcloud

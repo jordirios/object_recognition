@@ -1,5 +1,5 @@
-#include <libfreenect/libfreenect.hpp>
-#include <libfreenect/libfreenect_registration.h>
+#include <libfreenect.hpp>
+//#include <libfreenect_registration.h>
 #include <vector>
 
 class KinectRegistration
@@ -14,22 +14,22 @@ public:
 	std::vector<int32_t> depth_to_rgb_shift;
 	int32_t DEPTH_X_RES,DEPTH_Y_RES; 
 
-	int DEPTH_MAX_METRIC_VALUE = 10000;
-	int DEPTH_NO_MM_VALUE = 10000;
+    int DEPTH_MAX_METRIC_VALUE;
+    int DEPTH_NO_MM_VALUE;
 
-	int REG_X_VAL_SCALE = 256; 
-	int S2D_PIXEL_CONST = 10;
-	double S2D_CONST_OFFSET = 0.375;
-	int DEPTH_SENSOR_X_RES = 1280; 
-	bool DEPTH_MIRROR_X = false;
-	bool DENSE_REGISTRATION = false;
+    int REG_X_VAL_SCALE ;
+    int S2D_PIXEL_CONST;
+    double S2D_CONST_OFFSET;
+    int DEPTH_SENSOR_X_RES;
+    bool DEPTH_MIRROR_X;
+    bool DENSE_REGISTRATION ;
 
-	freenect_reg_info * regdata = 0;
-	freenect_zero_plane_info * zpi = 0;
-	Freenect::Freenect myfreenect;
-    Freenect::FreenectDevice * device = 0;
+    freenect_reg_info * regdata;
+    freenect_zero_plane_info * zpi;
+    Freenect::Freenect myfreenect;
+    Freenect::FreenectDevice * device;
     freenect_registration reg;
-    freenect_device * dev = 0;
+    freenect_device * dev;
 
 	KinectRegistration(bool mirror);
 

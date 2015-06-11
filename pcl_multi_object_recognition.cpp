@@ -1,11 +1,8 @@
 #include "find_function.h"
 #include "OpenniStreamer.h"
+#include <pthread.h>
 
-
-
-
-int
-main (int argc, char** argv)
+int main (int argc, char** argv)
 {
 
 
@@ -45,8 +42,7 @@ main (int argc, char** argv)
   copyPointCloud (*scene, *complete_scene);
   frame_index = openni_streamer->GetFrameIndex();
 
-  for(int i = 0; i < num_threads; ++i)
-      thread_list[i] = std::thread(FindObject, model_list[i], std::ref(scene), std::ref(s), std::ref(found_models), i, filters->at(i), icp_iterations->at(i), std::ref(e), std::ref(frame_index));
+
     
   // Start the main detection loop
   // 1- wait for the threads to find all the objects
@@ -55,8 +51,12 @@ main (int argc, char** argv)
   // 4- wake up threads
     
   while(!visualizer.viewer_.wasStopped ()){
-    //wait for the threads to complete
-    s.Wait4threads();
+    FindObject(model_list[0],
+               scene,
+               s,
+               found_models, 0,
+               filters->at(0), icp_iterations->at(0),
+               e, frame_index);
     
     //Visualizing the model, scene and the estimated model position
     SetViewPoint (complete_scene);
@@ -68,8 +68,6 @@ main (int argc, char** argv)
     scene = openni_streamer->GetCloud();
     frame_index = openni_streamer->GetFrameIndex();
     copyPointCloud (*scene, *complete_scene);
-    // Wake up the threads
-    s.Notify2threads();
   }
 
   // Notifies all the threads top stop and waits for them to join

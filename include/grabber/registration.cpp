@@ -7,6 +7,23 @@ KinectRegistration::KinectRegistration(bool mirror){
 	if (mirror)
 		DEPTH_MIRROR_X = !DEPTH_MIRROR_X;
 	
+
+    DEPTH_MAX_METRIC_VALUE = 10000;
+    DEPTH_NO_MM_VALUE = 10000;
+
+    REG_X_VAL_SCALE = 256;
+    S2D_PIXEL_CONST = 10;
+    S2D_CONST_OFFSET = 0.375;
+    DEPTH_SENSOR_X_RES = 1280;
+    DEPTH_MIRROR_X = false;
+    DENSE_REGISTRATION = false;
+
+    regdata = 0;
+    zpi = 0;
+    device = 0;
+    dev = 0;
+
+
 	freenect_video_format requested_format = FREENECT_VIDEO_RGB;
     device = &myfreenect.createDevice<Freenect::FreenectDevice>(0);
     //device->setDepthFormat(FREENECT_DEPTH_REGISTERED);

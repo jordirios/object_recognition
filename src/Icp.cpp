@@ -2,6 +2,7 @@
 
 ICP::ICP ()
   {
+    icp_ = 0;
     if(!use_generalized_icp)
       icp_ = new pcl::IterativeClosestPoint<PointType, PointType>();
     else

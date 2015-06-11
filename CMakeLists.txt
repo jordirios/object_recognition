@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8)
 Project (pcl_multi_object_recognition CXX)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=gnu++0x")
 set(CMAKE_BUILD_TYPE Release) 
 
 set(INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -20,61 +20,6 @@ endif()
 #######
 
 
-#######find libusb
-if (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
-  # in cache already
-  set(LIBUSB_FOUND TRUE)
-else (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
-  find_path(LIBUSB_1_INCLUDE_DIR
-    NAMES
-  libusb.h
-    PATHS
-      /usr/include
-      /usr/local/include
-      /opt/local/include
-      /sw/include
-  PATH_SUFFIXES
-    libusb-1.0
-  )
-
-  find_library(LIBUSB_1_LIBRARY
-    NAMES
-      usb-1.0 usb
-    PATHS
-      /usr/lib
-      /usr/local/lib
-      /opt/local/lib
-      /sw/lib
-  )
-
-  set(LIBUSB_1_INCLUDE_DIRS
-    ${LIBUSB_1_INCLUDE_DIR}
-  )
-  set(LIBUSB_1_LIBRARIES
-    ${LIBUSB_1_LIBRARY}
-)
-
-  if (LIBUSB_1_INCLUDE_DIRS AND LIBUSB_1_LIBRARIES)
-     set(LIBUSB_1_FOUND TRUE)
-  endif (LIBUSB_1_INCLUDE_DIRS AND LIBUSB_1_LIBRARIES)
-
-  if (LIBUSB_1_FOUND)
-    if (NOT libusb_1_FIND_QUIETLY)
-      message(STATUS "Found libusb-1.0:")
-    message(STATUS " - Includes: ${LIBUSB_1_INCLUDE_DIRS}")
-    message(STATUS " - Libraries: ${LIBUSB_1_LIBRARIES}")
-    endif (NOT libusb_1_FIND_QUIETLY)
-  else (LIBUSB_1_FOUND)
-    if (libusb_1_FIND_REQUIRED)
-      message(FATAL_ERROR "Could not find libusb")
-    endif (libusb_1_FIND_REQUIRED)
-  endif (LIBUSB_1_FOUND)
-
-  # show the LIBUSB_1_INCLUDE_DIRS and LIBUSB_1_LIBRARIES variables only in the advanced view
-  mark_as_advanced(LIBUSB_1_INCLUDE_DIRS LIBUSB_1_LIBRARIES)
-
-endif (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
-#######
 
 #######find openni2
   find_path(OPENNI2_INCLUDE_DIRS NAMES OpenNI.h)
@@ -90,20 +35,12 @@ endif (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
 #######
 
 #######find freenect
-  IF(NOT FREENECT_ROOT)
-    IF(EXISTS "/usr/include/libfreenect")
-      SET(FREENECT_ROOT "/usr")
-    ELSEIF(EXISTS "/usr/local/include/libfreenect")
-      SET(FREENECT_ROOT "/usr/local")
-    ELSE()
-      MESSAGE("FREENECT_ROOT not set. Continuing anyway..")
-    ENDIF()
-  ENDIF()
+  SET(FREENECT_ROOT "/usr")
 
   # Include dir
   find_path(Freenect_INCLUDE_DIR
-    NAMES libfreenect.h
-    PATHS ${FREENECT_ROOT}/include/libfreenect 
+    NAMES libfreenect.hpp
+    PATHS ${FREENECT_ROOT}/include 
   )
 
   include_directories(${Freenect_INCLUDE_DIR} )
@@ -120,6 +57,6 @@ include_directories(${GRABBER_PATH})
 include_directories(${IMPL_PATH})
 
 
-  add_executable (pcl_multi_object_recognition pcl_multi_object_recognition.cpp  ${SOURCE_PATH}/Visualizer.cpp  ${SOURCE_PATH}/Cluster.cpp ${SOURCE_PATH}/Keypoints.cpp ${SOURCE_PATH}/Sampling.cpp ${SOURCE_PATH}/Icp.cpp  ${SOURCE_PATH}/Ppfe.cpp ${SOURCE_PATH}/OpenniStreamer.cpp ${SOURCE_PATH}/Error.cpp ${SOURCE_PATH}/find_function.cpp ${SOURCE_PATH}/define.cpp ${SOURCE_PATH}/help.cpp ${SOURCE_PATH}/utils.cpp ${SOURCE_PATH}/KeyDes.cpp ${GRABBER_PATH}/registration.cpp)
+add_executable (pcl_multi_object_recognition pcl_multi_object_recognition.cpp  ${SOURCE_PATH}/Visualizer.cpp  ${SOURCE_PATH}/Cluster.cpp ${SOURCE_PATH}/Keypoints.cpp ${SOURCE_PATH}/Sampling.cpp ${SOURCE_PATH}/Icp.cpp  ${SOURCE_PATH}/Ppfe.cpp ${SOURCE_PATH}/OpenniStreamer.cpp ${SOURCE_PATH}/Error.cpp ${SOURCE_PATH}/find_function.cpp ${SOURCE_PATH}/define.cpp ${SOURCE_PATH}/help.cpp ${SOURCE_PATH}/utils.cpp ${SOURCE_PATH}/KeyDes.cpp)# ${GRABBER_PATH}/registration.cpp)
 
 target_link_libraries( pcl_multi_object_recognition  ${OPENNI_LIBRARY} ${PCL_LIBRARIES} ${Freenect_LIBRARY} )

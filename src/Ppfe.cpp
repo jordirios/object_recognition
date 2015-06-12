@@ -5,12 +5,12 @@ Ppfe::Ppfe (pcl::PointCloud<PointType>::Ptr model)
 {
 
   hashmap_search_ = boost::make_shared <pcl::PPFHashMapSearch> (12.0f / 180.0f * float (M_PI), 0.05f);
-  cloud_model_ppf_ = boost::make_shared<pcl::PointCloud<pcl::PPFSignature>> ();
+  cloud_model_ppf_ = boost::make_shared<pcl::PointCloud<pcl::PPFSignature> > ();
   inliers_ = boost::make_shared<pcl::PointIndices> ();
-  model_xyz_ = boost::make_shared<pcl::PointCloud<XYZType>> ();
+  model_xyz_ = boost::make_shared<pcl::PointCloud<XYZType> > ();
   copyPointCloud (*model, *model_xyz_);
   coefficients_ = boost::make_shared<pcl::ModelCoefficients> ();
-  cloud_scene_ = boost::make_shared<pcl::PointCloud<XYZType>> ();
+  cloud_scene_ = boost::make_shared<pcl::PointCloud<XYZType> > ();
   seg_.setOptimizeCoefficients (true);
   seg_.setModelType (pcl::SACMODEL_PLANE);
   seg_.setMethodType (pcl::SAC_RANSAC);
@@ -59,7 +59,7 @@ Ppfe::GetCluster (pcl::PointCloud<PointType>::Ptr scene)
   mat_ = ppf_registration_.getFinalTransformation ();
   std::vector <pcl::Correspondences> cor_tmp;
 
-  std::vector<Eigen::Matrix4f, Eigen::aligned_allocator<Eigen::Matrix<float, 4, 4, 0, 4, 4>>>mat_tmp;
+  std::vector<Eigen::Matrix4f, Eigen::aligned_allocator<Eigen::Matrix<float, 4, 4, 0, 4, 4> > > mat_tmp;
   mat_tmp.push_back (mat_);
   ClusterType cluster_ = std::make_tuple (mat_tmp, cor_tmp);
   inliers_->indices.clear ();
